@@ -70,8 +70,9 @@ $( document ).ready(function() {
       console.log(data);
       data.map(function(msg){
         renderMessage(msg);
-      })
-        scrollToBottom();
+      });
+      riot.mount('message');
+      scrollToBottom();
     })
   }
   loadMessages();
