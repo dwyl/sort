@@ -1,5 +1,6 @@
 $( document ).ready(function() {
   var socket = io(); // initialise socket.io connection
+  var messageStore = [];
 
   function getName() {
     // prompt for person's name before allowing to post
@@ -19,6 +20,7 @@ $( document ).ready(function() {
    */
   function renderMessage(msg) {
     msg = JSON.parse(msg);
+    messageStore.push(msg)
     return;
   }
 
@@ -71,7 +73,7 @@ $( document ).ready(function() {
       data.map(function(msg){
         renderMessage(msg);
       });
-      riot.mount('message');
+      riot.mount('message', {messageStore: messageStore});
       scrollToBottom();
     })
   }
