@@ -14,10 +14,6 @@ $( document ).ready(function() {
     return name;
   }
 
-  /**
-   * renders messages to the DOM
-   * nothing fancy
-   */
   function renderMessage(msg) {
     msg = JSON.parse(msg);
     messageStore.push(msg);
@@ -55,7 +51,6 @@ $( document ).ready(function() {
   }
 
   socket.on('chat:messages:latest', function(msg) {
-    console.log(">> " +msg);
     renderMessage(msg);
     scrollToBottom();
   });
@@ -74,8 +69,10 @@ $( document ).ready(function() {
       data.map(function(msg){
         renderMessage(msg);
       });
-      riot.mount('message', {messageStore: messageStore});
-      scrollToBottom();
+      riot.mount('message', {
+        messageStore: messageStore,
+        scrollToBottom: scrollToBottom
+      });
     })
   }
   loadMessages();
