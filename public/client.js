@@ -13,31 +13,12 @@ $( document ).ready(function() {
     return name;
   }
 
-  function leadZero(number) {
-    return (number < 10) ? '0'+number : number;
-  }
-
-  function getTime(timestamp) {
-    var t, h, m, s, time;
-    t = new Date(timestamp);
-    h = leadZero(t.getHours());
-    m = leadZero(t.getMinutes());
-    s = leadZero(t.getSeconds());
-    return '' + h  + ':' + m + ':' + s;
-  }
-
   /**
    * renders messages to the DOM
    * nothing fancy
    */
   function renderMessage(msg) {
     msg = JSON.parse(msg);
-    var html = "<li class='row'>";
-    html += "<small class='time'>" + getTime(msg.t)  + " </small>";
-    html += "<span class='name'>" + msg.n + ": </span>";
-    html += "<span class='msg'>"  + msg.m + "</span>";
-    html += "</li>";
-    $('#messages').append(html);  // append to list
     return;
   }
 
