@@ -20,7 +20,8 @@ $( document ).ready(function() {
    */
   function renderMessage(msg) {
     msg = JSON.parse(msg);
-    messageStore.push(msg)
+    messageStore.push(msg);
+    riot.update();
     return;
   }
 
