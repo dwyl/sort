@@ -10,8 +10,9 @@ server.route([
   { method: 'GET', path: '/', handler: { file: "public/index.html" } },
 	// switch these two routes for a /static handler?
   { method: 'GET', path: '/{param*}' , handler: {directory: {path:'public'} } },
-  { method: 'GET', path: '/load', handler: 
-      require('./lib/load_messages').load }
+  { method: 'GET', path: '/load', handler:
+      require('./lib/load_messages').load },
+	{ method: 'GET', path: '/hello', handler: require('./lib/riot_handler.js') }
 ]);
 
 server.start(function () {
