@@ -7,7 +7,7 @@
 
   <script>
 
-    this.messageStore = opts.messageStore
+    this.messageStore = opts.messageStore;
 
     this.leadZero = function (number) {
       return (number < 10) ? '0'+number : number;

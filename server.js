@@ -1,5 +1,6 @@
-var Hapi = require('hapi');
-var server = new Hapi.Server();
+var Hapi         = require('hapi');
+var server       = new Hapi.Server();
+var riotHandlers = require('./lib/riot_handler.js');
 
 server.connection({
 	host: '0.0.0.0',
@@ -7,12 +8,14 @@ server.connection({
 });
 
 server.route([
-  { method: 'GET', path: '/', handler: { file: "public/index.html" } },
+  { method: 'GET', path: '/', handler: { file: 'public/index.html' } },
 	// switch these two routes for a /static handler?
   { method: 'GET', path: '/{param*}' , handler: {directory: {path:'public'} } },
   { method: 'GET', path: '/load', handler:
       require('./lib/load_messages').load },
-	{ method: 'GET', path: '/hello', handler: require('./lib/riot_handler.js') }
+
+	{ method: 'GET', path: '/hello',          handler: riotHandlers.hello },
+	{ method: 'GET', path: '/server-message', handler: riotHandlers.message }
 ]);
 
 server.start(function () {
