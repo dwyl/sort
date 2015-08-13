@@ -14,7 +14,6 @@ server.route([
   { method: 'GET', path: '/load', handler:
       require('./lib/load_messages').load },
 
-	{ method: 'GET', path: '/hello',          handler: riotHandlers.hello },
 	{ method: 'GET', path: '/server-message', handler: riotHandlers.message }
 ]);
 
