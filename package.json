@@ -36,6 +36,7 @@
   "devDependencies": {
     "codeclimate-test-reporter": "0.1.0",
     "decache": "^3.0.2",
+    "handlebars": "^3.0.3",
     "istanbul": "^0.3.17",
     "jsdoc": "^3.3.2",
     "jshint": "^2.8.0",

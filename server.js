@@ -8,14 +8,19 @@ server.connection({
 });
 
 server.route([
-  { method: 'GET', path: '/', handler: { file: 'public/index.html' } },
+  { method: 'GET', path: '/', handler: riotHandlers.message },
 	// switch these two routes for a /static handler?
   { method: 'GET', path: '/{param*}' , handler: {directory: {path:'public'} } },
   { method: 'GET', path: '/load', handler:
       require('./lib/load_messages').load },
-
-	{ method: 'GET', path: '/server-message', handler: riotHandlers.message }
 ]);
+
+server.views({
+  engines: {
+    html: require('handlebars')
+  },
+  path: './public'
+});
 
 server.start(function () {
   require('./lib/chat').init(server.listener, function(){
