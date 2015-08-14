@@ -8,7 +8,7 @@ server.connection({
 });
 
 server.route([
-  { method: 'GET', path: '/', handler: riotHandlers.message },
+  { method: 'GET', path: '/', handler: riotHandlers },
 	// switch these two routes for a /static handler?
   { method: 'GET', path: '/{param*}' , handler: {directory: {path:'public'} } },
   { method: 'GET', path: '/load', handler:
