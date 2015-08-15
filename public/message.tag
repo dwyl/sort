@@ -1,4 +1,5 @@
 <message>
+  <raw content={ serverMessages } />
   <li each={messageStore}>
     <small class="time">{parent.getTime(t)}</small>
     <span class="name">{n}</span>
@@ -7,17 +8,11 @@
 
   <script>
 
-    this.messageStore = opts.messageStore
+    this.messageStore = opts.messageStore && JSON.parse(opts.messageStore) || [];
 
     this.leadZero = function (number) {
       return (number < 10) ? '0'+number : number;
     };
-
-    // The above is one way of declaring a function in Riot
-    // An alternate way is:
-    //   leadZero (number) {
-    //     return (number < 10) ? '0'+number : number;
-    //   }
 
     this.getTime = function (timestamp) {
       var t, h, m, s, time;
@@ -28,7 +23,50 @@
       return '' + h  + ':' + m + ':' + s;
     };
 
-    this.on('mount', opts.scrollToBottom)
+    // CLIENT SIDE ONLY
+
+    // we want to check whether we are on the SERVER or on the CLIENT
+    // we can do this by checking for the presence of a render method on riot
+    // (riot explodes if we check for 'window')
+
+    var onClient = !riot.render
+
+    if (onClient) {
+
+      var socket = io('/');
+
+      socket.on('chat:messages:latest', function(msg) {
+        this.renderMessage(msg);
+        this.scrollToBottom();
+      }.bind(this));
+
+      socket.on('chat:people:new', function(name) {
+        $('#joiners').show();
+        $('#joined').text(name)
+        $('#joiners').fadeOut(5000);
+      });
+
+      this.renderMessage = function (msg) {
+        msg = JSON.parse(msg);
+        this.messageStore.push(msg);
+        this.update();
+        return;
+      }
+
+      // keeps latest message at the bottom of the screen
+      // http://stackoverflow.com/a/11910887/2870306
+      this.scrollToBottom = function () {
+        $(window).scrollTop($('#messages').height());
+      }
+
+      window.onresize = function(){
+        this.scrollToBottom();
+      }.bind(this);
+
+      this.on('mount', function(){
+        this.scrollToBottom();
+      })
+    }
 
   </script>
 </message>

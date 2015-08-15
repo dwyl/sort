@@ -1,6 +1,5 @@
 $( document ).ready(function() {
   var socket = io(); // initialise socket.io connection
-  var messageStore = [];
 
   function getName() {
     // prompt for person's name before allowing to post
@@ -12,13 +11,6 @@ $( document ).ready(function() {
     socket.emit('io:name', name);
     $( "#m" ).focus(); // focus cursor on the message input
     return name;
-  }
-
-  function renderMessage(msg) {
-    msg = JSON.parse(msg);
-    messageStore.push(msg);
-    riot.update();
-    return;
   }
 
   function sanitise(txt) {
@@ -40,21 +32,6 @@ $( document ).ready(function() {
     }
   });
 
-  // keeps latest message at the bottom of the screen
-  // http://stackoverflow.com/a/11910887/2870306
-  function scrollToBottom () {
-    $(window).scrollTop($('#messages').height());
-  }
-
-  window.onresize = function(){
-    scrollToBottom();
-  }
-
-  socket.on('chat:messages:latest', function(msg) {
-    renderMessage(msg);
-    scrollToBottom();
-  });
-
   socket.on('chat:people:new', function(name) {
     $('#joiners').show();
     $('#joined').text(name)
@@ -63,17 +40,4 @@ $( document ).ready(function() {
 
   getName();
 
-  function loadMessages() {
-    $.get('/load', function(data){
-      console.log(data);
-      data.map(function(msg){
-        renderMessage(msg);
-      });
-      riot.mount('message', {
-        messageStore: messageStore,
-        scrollToBottom: scrollToBottom
-      });
-    })
-  }
-  loadMessages();
 });
