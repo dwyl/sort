@@ -1,6 +1,5 @@
 $( document ).ready(function() {
   var socket = io(); // initialise socket.io connection
-  var messagesMounted = false;
 
   function getName() {
     // prompt for person's name before allowing to post
@@ -33,17 +32,6 @@ $( document ).ready(function() {
     }
   });
 
-  socket.on('chat:messages:latest', function(msg) {
-    if (!messagesMounted) {
-      riot.mount('message', {
-        socket: socket,
-        messageStore: [JSON.parse(msg)],
-        serverMessages: document.getElementsByTagName('message')[0].innerHTML
-      });
-      messagesMounted = true;
-    }
-  });
-
   socket.on('chat:people:new', function(name) {
     $('#joiners').show();
     $('#joined').text(name)
@@ -51,5 +39,5 @@ $( document ).ready(function() {
   });
 
   getName();
-  
+
 });

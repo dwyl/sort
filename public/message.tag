@@ -3,14 +3,12 @@
   <li each={messageStore}>
     <small class="time">{parent.getTime(t)}</small>
     <span class="name">{n}</span>
-    <span class="msg">{prefix + m}</span>
+    <span class="msg">{m}</span>
   </li>
 
   <script>
 
-    this.messageStore = opts.messageStore;
-    this.prefix = opts.prefix || '';
-    this.serverMessages = opts.serverMessages || ''
+    this.messageStore = opts.messageStore && JSON.parse(opts.messageStore) || [];
 
     this.leadZero = function (number) {
       return (number < 10) ? '0'+number : number;
@@ -27,16 +25,26 @@
 
     // CLIENT SIDE ONLY
 
-    // we want to check whether this is a REAL HTML document
-    // (constructor = HTMLDocument)
-    // or a 'simpleDom' document (constructor = simpleDom.Document)
+    // we want to check whether we are on the SERVER or on the CLIENT
+    // we can do this by checking for the presence of a render method on riot
+    // (riot explodes if we check for 'window')
 
-    if (document.constructor.toString().indexOf('HTML') > -1) {
+    var onClient = !riot.render
 
-      opts.socket.on('chat:messages:latest', function(msg) {
+    if (onClient) {
+
+      var socket = io('/');
+
+      socket.on('chat:messages:latest', function(msg) {
         this.renderMessage(msg);
         this.scrollToBottom();
       }.bind(this));
+
+      socket.on('chat:people:new', function(name) {
+        $('#joiners').show();
+        $('#joined').text(name)
+        $('#joiners').fadeOut(5000);
+      });
 
       this.renderMessage = function (msg) {
         msg = JSON.parse(msg);
@@ -62,7 +70,3 @@
 
   </script>
 </message>
-
-<raw>
-  this.root.innerHTML = opts.content
-</raw>
