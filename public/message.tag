@@ -1,5 +1,4 @@
 <message>
-  <raw content={ serverMessages } />
   <li each={messageStore}>
     <small class="time">{parent.getTime(t)}</small>
     <span class="name">{n}</span>
@@ -8,6 +7,9 @@
 
   <script>
 
+		// if opts.messageStore is undefined, the && will make it skip over the parse
+		// this way we avoid errors from JSON.parse being called on undefined
+		// we could also use a try / catch
     this.messageStore = opts.messageStore && JSON.parse(opts.messageStore) || [];
 
     this.leadZero = function (number) {
@@ -33,7 +35,7 @@
 
     if (onClient) {
 
-      var socket = io('/');
+      var socket = io();
 
       socket.on('chat:messages:latest', function(msg) {
         this.renderMessage(msg);
