@@ -31,7 +31,7 @@ test(file + " Socket.io Tests", function(t) {
     client.on('io:welcome', function(data) {
 
       console.log('TEST Welcome - > ', data);
-      t.ok(data, "✓ Welcome Received")
+      t.ok(data, "✓ Welcome Received");
     });
 
     client.on('chat:people:new', function(data) {
@@ -49,7 +49,7 @@ test(file + " Socket.io Tests", function(t) {
 
     client.on('connect', function(data) {
 
-      console.log('TEST Chat Client CONNECTED!!')
+      console.log('TEST Chat Client CONNECTED!!');
       // send a message BEFORE registering
       client.emit('io:message', message);
 
