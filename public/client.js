@@ -59,7 +59,7 @@ $( document ).ready(function() {
 
   window.onresize = function(){
     scrollToBottom();
-  }
+  };
 
   socket.on('chat:messages:latest', function(msg) {
     renderMessage(msg);
@@ -68,7 +68,7 @@ $( document ).ready(function() {
 
   socket.on('chat:people:new', function(name) {
     $('#joiners').show();
-    $('#joined').text(name)
+    $('#joined').text(name);
     $('#joiners').fadeOut(5000);
   });
 
@@ -84,7 +84,7 @@ $( document ).ready(function() {
         messageStore: messageStore,
         scrollToBottom: scrollToBottom
       });
-    })
+    });
   }
   loadMessages();
 

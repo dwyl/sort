@@ -15,7 +15,7 @@ test(file + " Confirm RedisCloud is accessible GET/SET", function(t) {
 
   redisClient.set('redis', 'working', redisClient.print);
   console.log("✓ Redis Client connected to: " + redisClient.address);
-  t.ok(redisClient.address !== '127.0.0.1:6379', ">>>>> Redis Client connected to: " + redisClient.address)
+  t.ok(redisClient.address !== '127.0.0.1:6379', ">>>>> Redis Client connected to: " + redisClient.address);
   redisClient.get('redis', function (err, reply) {
     t.equal(reply.toString(), 'working', '✓ RedisCLOUD is ' + reply.toString());
     redisClient.end();   // ensure redis con closed! - \\
