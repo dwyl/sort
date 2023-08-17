@@ -1,6 +1,14 @@
+var messageStore = [];
+function renderMessage(msg) {
+  msg = JSON.parse(msg);
+  messageStore.push(msg);
+  riot.update();
+  return;
+}
+
 $( document ).ready(function() {
   var socket = io(); // initialise socket.io connection
-  var messageStore = [];
+
 
   function getName() {
     // prompt for person's name before allowing to post
@@ -12,13 +20,6 @@ $( document ).ready(function() {
     socket.emit('io:name', name);
     $( "#m" ).focus(); // focus cursor on the message input
     return name;
-  }
-
-  function renderMessage(msg) {
-    msg = JSON.parse(msg);
-    messageStore.push(msg);
-    riot.update();
-    return;
   }
 
   function sanitise(txt) {
@@ -86,4 +87,5 @@ $( document ).ready(function() {
     })
   }
   loadMessages();
+
 });
