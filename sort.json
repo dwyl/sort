@@ -1,0 +1,17 @@
+    [
+      {
+        "id": 1,
+        "code": "DESC",
+        "label": "Newest first"
+      },
+      {
+        "id": 2,
+        "code": "ASC",
+        "label": "Oldest first"
+      },
+      {
+        "id": 3,
+        "code": "PRIORITY",
+        "label": "Sort by highest priority"
+      }
+    ]
