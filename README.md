@@ -70,7 +70,7 @@ Documentation available at:
 
 
 
-## Dart - Comming Soon!
+## Dart
 
 ### Installation
 
@@ -94,7 +94,7 @@ dependencies:
 ### Usage
 
 ```dart
-final sortArray = Srt.list()
+final sortArray = Sort.get()
 # use them how you see fit
 ```
 
